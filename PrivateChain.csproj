@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BouncyCastle.NetCoreSdk" Version="*" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="*" />
+    <PackageReference Include="System.Diagnostics.Debug" Version="*" />
+    <!-- <PackageReference Include="NBitcoin" Version="7.0.27" /> -->
+    <!-- <PackageReference Include="NBitcoin" Version="*" /> -->
+  </ItemGroup>
+
+</Project>
