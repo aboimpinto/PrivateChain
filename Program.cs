@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using PrivateChain.Services.BlockGenerator;
+using PrivateChain.Services.Listener;
+
 namespace PrivateChain;
 
 public class Program
@@ -29,6 +32,9 @@ public class Program
             })
             .ConfigureServices((hostContext, services) => 
             {
+                services.AddSingleton<IBootstrapper, BlockGeneratorService>();
+                services.AddSingleton<IBootstrapper, ListenerService>();
+
                 services.AddHostedService<PrivateChainWorker>();
             });
 }
