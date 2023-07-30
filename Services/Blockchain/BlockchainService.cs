@@ -24,6 +24,8 @@ public class BlockchainService :
         this._eventAggregator.Subscribe(this);
     }
 
+    public int Priority { get; set; } = 10;
+
     public void Shutdown()
     {
     }

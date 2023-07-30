@@ -30,6 +30,8 @@ public class MemPoolService :
         this._eventAggregator.Subscribe(this);
     }
 
+    public int Priority { get; set; } = 10;
+
     public void Shutdown()
     {
     }
@@ -49,10 +51,12 @@ public class MemPoolService :
             this._previousBlockId,
             Guid.NewGuid().ToString());
 
-        // Generate the BlockId for the next block
-        this._previousBlockId = blockCandidate.BlockId;
+        // Generate the BlockId for the block candidate and assign PreviousBlockId. 
+        // At this point the NextBlockId can be string.empty. 
+        // When a new transation is added to the MemPool the NextBlockId should be created.
         this._blockId = blockCandidate.NextBlockId;
-        this._nextBlockId = Guid.NewGuid().ToString();
+        this._previousBlockId = blockCandidate.BlockId;
+        this._nextBlockId = string.Empty;
 
         return blockCandidate;
     }

@@ -1,5 +1,8 @@
+using System.Reflection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PrivateChain.Model.ApplicationSettings;
 
 namespace PrivateChain
 {
@@ -22,8 +25,8 @@ namespace PrivateChain
             this._logger.LogInformation("PrivateChain service worker started...");
 
             this._logger.LogInformation("Start bootstrappable modules...");
-
-            foreach(var module in this._bootstrappers)
+            var bootstrappers = this._bootstrappers.OrderBy(x => x.Priority);
+            foreach(var module in bootstrappers)
             {
                 module.Startup();
             }

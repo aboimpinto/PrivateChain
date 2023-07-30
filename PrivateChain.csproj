@@ -14,8 +14,10 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="*" />
     <PackageReference Include="System.Diagnostics.Debug" Version="*" />
     <PackageReference Include="System.Reactive" Version="*" />
-    <!-- <PackageReference Include="NBitcoin" Version="7.0.27" /> -->
-    <!-- <PackageReference Include="NBitcoin" Version="*" /> -->
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ApplicationSettings.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

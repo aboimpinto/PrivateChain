@@ -11,6 +11,8 @@ public class ListenerService : IListenerService, IBootstrapper
         this._logger = logger;
     }
 
+    public int Priority { get; set; } = 10;
+
     public void Shutdown()
     {
     }

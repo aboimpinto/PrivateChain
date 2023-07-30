@@ -7,7 +7,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using PrivateChain.Services.ApplicationSettings;
 using PrivateChain.Services.Blockchain;
 using PrivateChain.Services.BlockGenerator;
 using PrivateChain.Services.Listener;
@@ -37,6 +37,7 @@ public class Program
 
                 services.AddHostedService<PrivateChainWorker>();
             })
+            .RegisterApplicationSettings()
             .RegisterBlockGenerator()
             .RegisterBlockchain()
             .RegisterListener()

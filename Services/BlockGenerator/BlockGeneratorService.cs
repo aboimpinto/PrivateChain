@@ -31,6 +31,8 @@ public class BlockGeneratorService :
         this._eventAggregator.Subscribe(this);
     }
 
+    public int Priority { get; set; } = 5;
+
     public void Shutdown()
     {
     }
