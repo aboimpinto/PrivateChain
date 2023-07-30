@@ -9,9 +9,11 @@
 
   <ItemGroup>
     <PackageReference Include="BouncyCastle.NetCoreSdk" Version="*" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="*" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="*" />
     <PackageReference Include="System.Diagnostics.Debug" Version="*" />
+    <PackageReference Include="System.Reactive" Version="*" />
     <!-- <PackageReference Include="NBitcoin" Version="7.0.27" /> -->
     <!-- <PackageReference Include="NBitcoin" Version="*" /> -->
   </ItemGroup>

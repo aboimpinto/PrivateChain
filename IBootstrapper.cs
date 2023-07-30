@@ -2,8 +2,8 @@ namespace PrivateChain
 {
     public interface IBootstrapper
     {
-        Task StartupAsync();
+        void Startup();
 
-        Task ShutdownAsync();
+        void Shutdown();
     }
 }

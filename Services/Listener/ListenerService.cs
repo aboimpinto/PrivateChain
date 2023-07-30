@@ -11,15 +11,12 @@ public class ListenerService : IListenerService, IBootstrapper
         this._logger = logger;
     }
 
-    public Task ShutdownAsync()
+    public void Shutdown()
     {
-        return Task.CompletedTask;
     }
 
-    public Task StartupAsync()
+    public void Startup()
     {
         this._logger.LogInformation("Starting ListenerService...");
-
-        return Task.CompletedTask;
     }
 }

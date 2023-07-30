@@ -7,10 +7,11 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
+using PrivateChain.Services.Blockchain;
 using PrivateChain.Services.BlockGenerator;
 using PrivateChain.Services.Listener;
+using PrivateChain.Services.MemPool;
 
 namespace PrivateChain;
 
@@ -32,11 +33,14 @@ public class Program
             })
             .ConfigureServices((hostContext, services) => 
             {
-                services.AddSingleton<IBootstrapper, BlockGeneratorService>();
-                services.AddSingleton<IBootstrapper, ListenerService>();
+                services.AddSingleton<IEventAggregator, EventAggregator>();
 
                 services.AddHostedService<PrivateChainWorker>();
-            });
+            })
+            .RegisterBlockGenerator()
+            .RegisterBlockchain()
+            .RegisterListener()
+            .RegisterMemPool();
 }
 
 // public static class BitcoinStyleKeyPairExample

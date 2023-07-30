@@ -17,7 +17,7 @@ namespace PrivateChain
 
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             this._logger.LogInformation("PrivateChain service worker started...");
 
@@ -25,8 +25,10 @@ namespace PrivateChain
 
             foreach(var module in this._bootstrappers)
             {
-                await module.StartupAsync();
+                module.Startup();
             }
+
+            return Task.CompletedTask;
         }
     }
 }
