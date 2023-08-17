@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Logging;
 using PrivateChain.Builders;
 using PrivateChain.EventMessages;
+using PrivateChain.Model.ApplicationSettings;
+using PrivateChain.Services.ApplicationSettings;
 using PrivateChain.Services.MemPool;
 using System.Reactive.Linq;
 
@@ -13,6 +15,7 @@ public class BlockGeneratorService :
     IHandle<MemPoolInitializedEvent>
 {
     private readonly IMemPoolService _memPoolService;
+    private readonly IStackerInfo _stackerInfo;
     private readonly IEventAggregator _eventAggregator;
     private readonly ILogger<BlockGeneratorService> _logger;
     
@@ -21,10 +24,12 @@ public class BlockGeneratorService :
 
     public BlockGeneratorService(
         IMemPoolService memPoolService, 
+        IStackerInfo stackerInfo,
         IEventAggregator eventAggregator,
         ILogger<BlockGeneratorService> logger)
     {
         this._memPoolService = memPoolService;
+        this._stackerInfo = stackerInfo;
         this._eventAggregator = eventAggregator;
         this._logger = logger;
 
@@ -59,6 +64,7 @@ public class BlockGeneratorService :
             var block = new BlockBuilder()
                 .WithBlockId(blockCandidate.BlockId)
                 .WithPreviousBlockId(blockCandidate.PreviousBlockId)
+                .WithRewardBeneficiary(this._stackerInfo.PublicSigningAddress)
                 .WithNextBlockId(blockCandidate.NextBlockId)
                 .WithIndex(blockCandidate.Index)
                 .Build();

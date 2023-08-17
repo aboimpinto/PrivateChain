@@ -6,11 +6,11 @@ public class Block
 
     public string TimeStamp { get; } = string.Empty;
 
-    public IEnumerable<TransactionBase> Transactions { get; }
+    public IEnumerable<TransactionBase> Transactions { get; set; }
 
     public double Index { get; }
 
-    public string Hash { get; private set; }
+    public string Hash { get; private set; } = string.Empty;
 
     public string PreviousBlockId { get; } = string.Empty;
 

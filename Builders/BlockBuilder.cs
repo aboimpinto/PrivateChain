@@ -8,10 +8,21 @@ namespace PrivateChain.Builders
         private string _nextBlockId = string.Empty;
         private string _blockId = string.Empty;
         private double _index;
+        private BlockCreationTransaction _rewardTrasaction;
 
         public BlockBuilder WithBlockId(string blockId)
         {
             this._blockId = blockId;
+            return this;
+        }
+
+        public BlockBuilder WithRewardBeneficiary(string beneficiaryAddress)
+        {
+            this._rewardTrasaction = new BlockCreationTransaction();
+
+            this._rewardTrasaction.DestinationAddress = beneficiaryAddress;
+            this._rewardTrasaction.Reward = 0.5;              // TODO: this need to be configurable by the network,
+
             return this;
         }
 
@@ -35,11 +46,18 @@ namespace PrivateChain.Builders
 
         public Block Build()
         {
-            return new Block(
+            var block = new Block(
                 this._blockId, 
                 this._previousBlockId, 
                 this._nextBlockId, 
                 this._index);
+
+            block.Transactions = new List<TransactionBase>
+            {
+                this._rewardTrasaction
+            };
+
+            return block;
         }
     }
 }

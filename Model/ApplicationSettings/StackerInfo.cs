@@ -1,6 +1,6 @@
 namespace PrivateChain.Model.ApplicationSettings
 {
-    public class StackerInfo
+    public class StackerInfo : IStackerInfo
     {
         public string PublicSigningAddress { get; set; } = string.Empty;
 

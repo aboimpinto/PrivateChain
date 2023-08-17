@@ -1,9 +1,9 @@
-using PrivateChain.Model.ApplicationSettings;
+// using PrivateChain.Model.ApplicationSettings;
 
-namespace PrivateChain.Services.ApplicationSettings
-{
-    public interface IApplicationSettingsService
-    {
-        public StackerInfo StackerInfo { get; set; }
-    }
-}
+// namespace PrivateChain.Services.ApplicationSettings
+// {
+//     public interface IApplicationSettingsService
+//     {
+//         public StackerInfo StackerInfo { get; set; }
+//     }
+// }

@@ -5,18 +5,20 @@ using PrivateChain.Model.ApplicationSettings;
 
 namespace PrivateChain.Services.ApplicationSettings
 {
-    public class ApplicationSettingsService : IBootstrapper, IApplicationSettingsService
+    public class ApplicationSettingsService : IBootstrapper
     {
+        private readonly IStackerInfo _stackerInfo;
         private readonly ILogger<ApplicationSettingsService> _logger;
 
-        public ApplicationSettingsService(ILogger<ApplicationSettingsService> logger)
+        public ApplicationSettingsService(
+            IStackerInfo stackerInfo,
+            ILogger<ApplicationSettingsService> logger)
         {
+            this._stackerInfo = stackerInfo;
             this._logger = logger;
         }
 
         public int Priority { get; set; } = 0;
-
-        public StackerInfo StackerInfo { get; set; }
 
         public void Shutdown()
         {
@@ -34,9 +36,12 @@ namespace PrivateChain.Services.ApplicationSettings
                 .AddEnvironmentVariables()
                 .Build();
 
-            this.StackerInfo = config
+            var stackerInfo = config
                 .GetRequiredSection("StackerInfo")
                 .Get<StackerInfo>();
+
+            this._stackerInfo.PublicEncryptAddress = stackerInfo.PublicEncryptAddress;
+            this._stackerInfo.PublicSigningAddress = stackerInfo.PublicSigningAddress;
         }
     }
 }
