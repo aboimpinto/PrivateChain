@@ -1,12 +1,13 @@
+using Microsoft.Extensions.Logging;
 using PrivateChain.Builders;
 using PrivateChain.EventMessages;
 using PrivateChain.Model;
+using PrivateChain.Model.ApplicationSettings;
 
 namespace PrivateChain.Services.Blockchain;
 
 public class BlockchainService : 
     IBootstrapper, 
-    IBlockchainService,
     IHandle<BlockCreatedEvent>
 {
     public BlockchainInfo BlockchainInfo { get; private set; }
@@ -14,10 +15,17 @@ public class BlockchainService :
     private List<Block> _blockchain;
     private string _lastBlockIdFromLocal = string.Empty;
     private readonly IEventAggregator _eventAggregator;
+    private readonly ILogger<BlockchainService> _logger;
+    private readonly IStackerInfo _stackerInfo;
 
-    public BlockchainService(IEventAggregator eventAggregator)
+    public BlockchainService(
+        IStackerInfo stackerInfo,
+        IEventAggregator eventAggregator,
+        ILogger<BlockchainService> logger)
     {
+        this._stackerInfo = stackerInfo;
         this._eventAggregator = eventAggregator;
+        this._logger = logger;
 
         this._blockchain = new List<Block>();
 
@@ -47,10 +55,13 @@ public class BlockchainService :
             var block = new BlockBuilder()
                 .WithBlockId(genesisBlockId)
                 .WithNextBlockId(Guid.NewGuid().ToString())
+                .WithRewardBeneficiary(this._stackerInfo.PublicSigningAddress)
                 .WithIndex(1)
                 .Build();
 
             block.FinalizeBlock();
+
+            this._logger.LogInformation("Genesis block created: {0}", block.ToString());
 
             this._blockchain.Add(block);
             this._lastBlockIdFromLocal = genesisBlockId;

@@ -18,10 +18,14 @@ namespace PrivateChain.Builders
 
         public BlockBuilder WithRewardBeneficiary(string beneficiaryAddress)
         {
-            this._rewardTrasaction = new BlockCreationTransaction();
-
-            this._rewardTrasaction.DestinationAddress = beneficiaryAddress;
-            this._rewardTrasaction.Reward = 0.5;              // TODO: this need to be configurable by the network,
+            this._rewardTrasaction = new BlockCreationTransaction
+            {
+                Type = NativeTransactionType.BlockCreation,
+                BlockId = this._blockId,
+                TransactionId = Guid.NewGuid().ToString(),
+                DestinationAddress = beneficiaryAddress,
+                Reward = 0.5              // TODO: this need to be configurable by the network,
+            };
 
             return this;
         }
@@ -46,15 +50,21 @@ namespace PrivateChain.Builders
 
         public Block Build()
         {
-            var block = new Block(
-                this._blockId, 
-                this._previousBlockId, 
-                this._nextBlockId, 
-                this._index);
-
-            block.Transactions = new List<TransactionBase>
+            if (this._rewardTrasaction == null)
             {
-                this._rewardTrasaction
+                throw new InvalidOperationException("Cannot create a block without reward transaction!");
+            }
+
+            var block = new Block(
+                this._blockId,
+                this._previousBlockId,
+                this._nextBlockId,
+                this._index)
+            {
+                Transactions = new List<TransactionBase>
+                {
+                    this._rewardTrasaction
+                }
             };
 
             return block;

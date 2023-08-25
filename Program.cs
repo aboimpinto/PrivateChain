@@ -7,6 +7,8 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PrivateChain.Factories;
+using PrivateChain.Model;
 using PrivateChain.Services.ApplicationSettings;
 using PrivateChain.Services.Blockchain;
 using PrivateChain.Services.BlockGenerator;
@@ -34,6 +36,11 @@ public class Program
             .ConfigureServices((hostContext, services) => 
             {
                 services.AddSingleton<IEventAggregator, EventAggregator>();
+
+                services.AddTransient<ISpecificTransactionDeserializer, BlockCreationTransactionDeserializer>();
+
+                services.AddSingleton<IBlockCreateEventFactory, BlockCreateEventFactory>();
+                services.AddTransient<TransactionBaseConverter>();
 
                 services.AddHostedService<PrivateChainWorker>();
             })

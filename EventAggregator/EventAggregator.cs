@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Microsoft.Extensions.Logging;
 
 namespace PrivateChain;
@@ -23,8 +22,7 @@ public class EventAggregator : IEventAggregator
 
     public Task PublishAsync<T>(T message) where T : class
     {
-        var jsonMessage = JsonSerializer.Serialize(message);
-        this._logger.LogInformation("Publishing message {0} | {1}", message.GetType().Name, jsonMessage);
+        this._logger.LogInformation("Publishing message {0} | {1}", message.GetType().Name, message.ToString());
 
         foreach (var handler in this._subscribersList.Select(x => x.Value).OfType<IHandle<T>>().ToList())
         {
