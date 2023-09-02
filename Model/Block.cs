@@ -1,5 +1,3 @@
-using System.Text.Json;
-
 namespace PrivateChain.Model;
 
 public class Block
@@ -35,12 +33,4 @@ public class Block
     {
         this.Hash = this.GetHashCode().ToString();
     }
-
-    // public override string ToString()
-    // { 
-    //     return JsonSerializer.Serialize(this, new JsonSerializerOptions
-    //     {
-    //         Converters = { new TransactionBaseConverter() }
-    //     });
-    // }
 }
