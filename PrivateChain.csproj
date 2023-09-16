@@ -8,12 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BouncyCastle.NetCoreSdk" Version="*" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="*" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="*" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="*" />
-    <PackageReference Include="System.Diagnostics.Debug" Version="*" />
-    <PackageReference Include="System.Reactive" Version="*" />
+    <!-- <PackageReference Include="BouncyCastle.NetCoreSdk" Version="*" /> -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Systemd" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.logging.Abstractions" Version="7.0.1" />
+    <PackageReference Include="nbitcoin" Version="7.0.30" />
+    <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
+    <PackageReference Include="System.Reactive" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
