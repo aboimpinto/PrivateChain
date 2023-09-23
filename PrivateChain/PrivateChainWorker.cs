@@ -1,8 +1,5 @@
-using System.Reflection;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using PrivateChain.Model.ApplicationSettings;
 
 namespace PrivateChain
 {
@@ -32,6 +29,20 @@ namespace PrivateChain
             }
 
             return Task.CompletedTask;
+        }
+
+        public override Task StopAsync(CancellationToken cancellationToken)
+        {
+            this._logger.LogInformation("Stopping modules...");
+
+            var bootstrappers = this._bootstrappers.OrderBy(x => x.Priority);
+            foreach(var module in bootstrappers)
+            {
+                module.Shutdown();
+            }
+
+            this._logger.LogInformation("All modules successfully shutdown...");
+            return base.StopAsync(cancellationToken);
         }
     }
 }

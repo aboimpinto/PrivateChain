@@ -1,14 +1,22 @@
+using System.Text.Json;
 using PrivateChain.Model;
+using PrivateChain.Model.ApplicationSettings;
 
 namespace PrivateChain.Builders
 {
     public class BlockBuilder
     {
+        private readonly TransactionBaseConverter _transactionBaseConverter;
         private string _previousBlockId = string.Empty;
         private string _nextBlockId = string.Empty;
         private string _blockId = string.Empty;
         private double _index;
-        private BlockCreationTransaction _rewardTrasaction;
+        private Transaction _rewardTrasaction;
+
+        public BlockBuilder(TransactionBaseConverter transactionBaseConverter)
+        {
+            this._transactionBaseConverter = transactionBaseConverter;
+        }
 
         public BlockBuilder WithBlockId(string blockId)
         {
@@ -16,16 +24,26 @@ namespace PrivateChain.Builders
             return this;
         }
 
-        public BlockBuilder WithRewardBeneficiary(string beneficiaryAddress)
+        public BlockBuilder WithRewardBeneficiary(IStackerInfo stackerInfo)
         {
-            this._rewardTrasaction = new BlockCreationTransaction
+            var rawRewardTrasaction = new BlockCreationTransaction
             {
                 Type = NativeTransactionType.BlockCreation,
                 BlockId = this._blockId,
                 TransactionId = Guid.NewGuid().ToString(),
-                DestinationAddress = beneficiaryAddress,
-                Reward = 0.5              // TODO: this need to be configurable by the network,
+                DestinationAddress = stackerInfo.PublicEncryptAddress,
+                Reward = 0.5                                                // TODO: this need to be codnfigurable by the network,
             };
+
+            var jsonOptions = new JsonSerializerOptions
+            {
+                Converters = { this._transactionBaseConverter }
+            };
+
+            var jsonRewardTransaction = JsonSerializer.Serialize(this._rewardTrasaction, jsonOptions);
+            var rewardTransactionSignature = Signing.Manager.SigningKeys.SignMessage(jsonRewardTransaction, stackerInfo.PrivateSigningAddress);
+
+            this._rewardTrasaction = new Transaction(rawRewardTrasaction, rewardTransactionSignature);
 
             return this;
         }
@@ -61,7 +79,7 @@ namespace PrivateChain.Builders
                 this._nextBlockId,
                 this._index)
             {
-                Transactions = new List<TransactionBase>
+                Transactions = new List<Transaction>
                 {
                     this._rewardTrasaction
                 }

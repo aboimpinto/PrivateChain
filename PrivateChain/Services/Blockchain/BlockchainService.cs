@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using PrivateChain.Builders;
 using PrivateChain.EventMessages;
+using PrivateChain.Factories;
 using PrivateChain.Model;
 using PrivateChain.Model.ApplicationSettings;
 
@@ -16,13 +17,16 @@ public class BlockchainService :
     private string _lastBlockIdFromLocal = string.Empty;
     private readonly IEventAggregator _eventAggregator;
     private readonly ILogger<BlockchainService> _logger;
+    private readonly IBlockBuilderFactory _blockBuilderFactory;
     private readonly IStackerInfo _stackerInfo;
 
     public BlockchainService(
+        IBlockBuilderFactory blockBuilderFactory,
         IStackerInfo stackerInfo,
         IEventAggregator eventAggregator,
         ILogger<BlockchainService> logger)
     {
+        this._blockBuilderFactory = blockBuilderFactory;
         this._stackerInfo = stackerInfo;
         this._eventAggregator = eventAggregator;
         this._logger = logger;
@@ -38,7 +42,7 @@ public class BlockchainService :
     {
     }
 
-    public void Startup()
+    public async Task Startup()
     {
         // Connect to the Network and obtain the last block
         var lastBlockIdFromNetwork = string.Empty;
@@ -52,10 +56,10 @@ public class BlockchainService :
             var genesisBlockId = Guid.NewGuid().ToString();
 
             // Creation of the GenesisBlock
-            var block = new BlockBuilder()
+            var block = this._blockBuilderFactory.GetInstance()
                 .WithBlockId(genesisBlockId)
                 .WithNextBlockId(Guid.NewGuid().ToString())
-                .WithRewardBeneficiary(this._stackerInfo.PublicSigningAddress)
+                .WithRewardBeneficiary(this._stackerInfo)
                 .WithIndex(1)
                 .Build();
 
@@ -66,13 +70,13 @@ public class BlockchainService :
             this._blockchain.Add(block);
             this._lastBlockIdFromLocal = genesisBlockId;
 
-            this._eventAggregator.PublishAsync(new BlockchainInitializedFromGenesisEvent(block.BlockId, block.NextBlockId));
+            await this._eventAggregator.PublishAsync(new BlockchainInitializedFromGenesisEvent(block.BlockId, block.NextBlockId));
         }
         else
         {
             // Need to sync the Local Blockchain
 
-            this._eventAggregator.PublishAsync(new BlockchainInitializedEvent());
+            await this._eventAggregator.PublishAsync(new BlockchainInitializedEvent());
         }
     }
 

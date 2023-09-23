@@ -11,15 +11,8 @@ namespace PrivateChain.Services.ApplicationSettings
         builder.ConfigureServices((hostContext, services) => 
         {
             services.AddSingleton<IStackerInfo, StackerInfo>();
+            services.AddSingleton<IServerInfo, ServerInfo>();
             services.AddSingleton<IBootstrapper, ApplicationSettingsService>(); 
-
-            // var serviceProvider = services.BuildServiceProvider();
-
-            // var applicationSettingsService = serviceProvider.GetService<IApplicationSettingsService>();
-            // if (applicationSettingsService is IBootstrapper)
-            // {
-            //     services.AddSingleton<IBootstrapper>((IBootstrapper)applicationSettingsService);
-            // }
         });
 
         return builder;

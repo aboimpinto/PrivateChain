@@ -5,7 +5,8 @@ namespace PrivateChain.Factories;
 
 public class BlockCreateEventFactory : IBlockCreateEventFactory
 {
-        private readonly TransactionBaseConverter _transactionBaseConverter;
+    private readonly TransactionBaseConverter _transactionBaseConverter;
+    
     public BlockCreateEventFactory(TransactionBaseConverter transactionBaseConverter)
     {
             this._transactionBaseConverter = transactionBaseConverter;

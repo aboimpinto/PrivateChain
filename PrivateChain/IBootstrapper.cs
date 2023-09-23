@@ -4,7 +4,7 @@ namespace PrivateChain
     {
         int Priority { get; set; }
 
-        void Startup();
+        Task Startup();
 
         void Shutdown();
     }

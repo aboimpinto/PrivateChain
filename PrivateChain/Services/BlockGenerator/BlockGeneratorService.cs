@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using PrivateChain.Builders;
 using PrivateChain.EventMessages;
 using PrivateChain.Factories;
 using PrivateChain.Model.ApplicationSettings;
@@ -16,6 +15,7 @@ public class BlockGeneratorService :
     private readonly IMemPoolService _memPoolService;
     private readonly IStackerInfo _stackerInfo;
     private readonly IBlockCreateEventFactory _blockCreateEventFactory;
+    private readonly IBlockBuilderFactory _blockBuilderFactory;
     private readonly IEventAggregator _eventAggregator;
     private readonly ILogger<BlockGeneratorService> _logger;
     
@@ -26,12 +26,14 @@ public class BlockGeneratorService :
         IMemPoolService memPoolService, 
         IStackerInfo stackerInfo,
         IBlockCreateEventFactory blockCreateEventFactory,
+        IBlockBuilderFactory blockBuilderFactory,
         IEventAggregator eventAggregator,
         ILogger<BlockGeneratorService> logger)
     {
         this._memPoolService = memPoolService;
         this._stackerInfo = stackerInfo;
         this._blockCreateEventFactory = blockCreateEventFactory;
+        this._blockBuilderFactory = blockBuilderFactory;
         this._eventAggregator = eventAggregator;
         this._logger = logger;
 
@@ -44,12 +46,14 @@ public class BlockGeneratorService :
     {
     }
 
-    public void Startup()
+    public Task Startup()
     {
         this._logger.LogInformation("Starting BlockGeneratorService...");
 
         this._blockchainGeneratorLoop = Observable
             .Interval(TimeSpan.FromSeconds(3));
+
+            return Task.CompletedTask;
     }
 
     public void Handle(BlockchainInitializedEvent message)
@@ -63,10 +67,10 @@ public class BlockGeneratorService :
         {
             var blockCandidate = this._memPoolService.GetBlockCandidate();
 
-            var block = new BlockBuilder()
+            var block = this._blockBuilderFactory.GetInstance()
                 .WithBlockId(blockCandidate.BlockId)
                 .WithPreviousBlockId(blockCandidate.PreviousBlockId)
-                .WithRewardBeneficiary(this._stackerInfo.PublicSigningAddress)
+                .WithRewardBeneficiary(this._stackerInfo)
                 .WithNextBlockId(blockCandidate.NextBlockId)
                 .WithIndex(blockCandidate.Index)
                 .Build();

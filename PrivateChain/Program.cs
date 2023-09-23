@@ -14,6 +14,7 @@ using PrivateChain.Services.Blockchain;
 using PrivateChain.Services.BlockGenerator;
 using PrivateChain.Services.Listener;
 using PrivateChain.Services.MemPool;
+using PrivateChain.Services.Server;
 
 namespace PrivateChain;
 
@@ -40,11 +41,13 @@ public class Program
                 services.AddTransient<ISpecificTransactionDeserializer, BlockCreationTransactionDeserializer>();
 
                 services.AddSingleton<IBlockCreateEventFactory, BlockCreateEventFactory>();
+                services.AddSingleton<IBlockBuilderFactory, BlockBuildFactory>();
                 services.AddTransient<TransactionBaseConverter>();
 
                 services.AddHostedService<PrivateChainWorker>();
             })
             .RegisterApplicationSettings()
+            .RegisterServer()
             .RegisterBlockGenerator()
             .RegisterBlockchain()
             .RegisterListener()

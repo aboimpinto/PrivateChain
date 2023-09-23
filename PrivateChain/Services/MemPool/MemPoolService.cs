@@ -36,9 +36,11 @@ public class MemPoolService :
     {
     }
 
-    public void Startup()
+    public Task Startup()
     {
         this._nextBlockTransactionsCandidate = new List<TransactionBase>();
+
+        return Task.CompletedTask;
     }
 
     public BlockCandidate GetBlockCandidate()

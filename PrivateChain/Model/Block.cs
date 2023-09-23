@@ -6,7 +6,7 @@ public class Block
 
     public string TimeStamp { get; } = string.Empty;
 
-    public IEnumerable<TransactionBase> Transactions { get; set; }
+    public IEnumerable<Transaction> Transactions { get; set; }
 
     public double Index { get; }
 
@@ -19,7 +19,7 @@ public class Block
 
     public Block(string blockId, string previousBlockId, string nextBlockId, double index)
     {
-        this.Transactions = new List<TransactionBase>();
+        this.Transactions = new List<Transaction>();
         this.TimeStamp = DateTime.UtcNow.ToString();
 
         this.PreviousBlockId = previousBlockId;

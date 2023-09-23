@@ -17,8 +17,10 @@ public class ListenerService : IListenerService, IBootstrapper
     {
     }
 
-    public void Startup()
+    public Task Startup()
     {
         this._logger.LogInformation("Starting ListenerService...");
+
+        return Task.CompletedTask;
     }
 }
