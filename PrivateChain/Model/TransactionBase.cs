@@ -6,8 +6,6 @@ namespace PrivateChain.Model
 
         public string Type { get; set; } = string.Empty;
 
-        public bool Encrypted { get; set; } = false;
-
         public string BlockId { get; set; } = string.Empty;
     }
 }

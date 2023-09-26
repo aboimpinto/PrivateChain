@@ -32,7 +32,7 @@ namespace PrivateChain.Builders
                 BlockId = this._blockId,
                 TransactionId = Guid.NewGuid().ToString(),
                 DestinationAddress = stackerInfo.PublicEncryptAddress,
-                Reward = 0.5                                                // TODO: this need to be codnfigurable by the network,
+                Reward = 0.5                                                // TODO: this need to be configurable by the network,
             };
 
             var jsonOptions = new JsonSerializerOptions
@@ -43,7 +43,11 @@ namespace PrivateChain.Builders
             var jsonRewardTransaction = JsonSerializer.Serialize(this._rewardTrasaction, jsonOptions);
             var rewardTransactionSignature = Signing.Manager.SigningKeys.SignMessage(jsonRewardTransaction, stackerInfo.PrivateSigningAddress);
 
-            this._rewardTrasaction = new Transaction(rawRewardTrasaction, rewardTransactionSignature);
+            this._rewardTrasaction = new Transaction(
+                rawRewardTrasaction, 
+                rewardTransactionSignature,
+                isEncrypted: false,
+                isValueTransaction: true);
 
             return this;
         }
