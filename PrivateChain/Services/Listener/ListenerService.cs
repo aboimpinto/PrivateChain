@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Olimpo;
 
 namespace PrivateChain.Services.Listener;
 

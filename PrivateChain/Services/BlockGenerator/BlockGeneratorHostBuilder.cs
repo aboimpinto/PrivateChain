@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Olimpo;
 using PrivateChain.Model;
 
 namespace PrivateChain.Services.BlockGenerator;

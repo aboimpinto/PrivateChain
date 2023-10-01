@@ -46,6 +46,7 @@ public class Program
                 services.AddHostedService<PrivateChainWorker>();
             })
             .RegisterEventAggregatorManager()
+            .RegisterBootstrapperManager()
             .RegisterApplicationSettings()
             .RegisterServer()
             .RegisterBlockGenerator()

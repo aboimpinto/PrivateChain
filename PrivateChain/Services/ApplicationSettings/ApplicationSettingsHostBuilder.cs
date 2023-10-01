@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Olimpo;
 using PrivateChain.Model.ApplicationSettings;
 
 namespace PrivateChain.Services.ApplicationSettings

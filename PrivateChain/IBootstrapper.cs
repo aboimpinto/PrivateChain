@@ -1,11 +1,11 @@
-namespace PrivateChain
-{
-    public interface IBootstrapper
-    {
-        int Priority { get; set; }
+// namespace PrivateChain
+// {
+//     public interface IBootstrapper
+//     {
+//         int Priority { get; set; }
 
-        Task Startup();
+//         Task Startup();
 
-        void Shutdown();
-    }
-}
+//         void Shutdown();
+//     }
+// }

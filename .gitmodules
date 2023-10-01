@@ -7,3 +7,6 @@
 [submodule "Modules/Encrypting.Manager"]
 	path = Modules/Encrypting.Manager
 	url = git@github.com:aboimpinto/Encrypting.Manager.git
+[submodule "Modules/Bootstrapper.Manager"]
+	path = Modules/Bootstrapper.Manager
+	url = git@github.com:aboimpinto/Bootstrapper.Manager.git

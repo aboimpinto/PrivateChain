@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Olimpo;
 
 namespace PrivateChain.Services.Blockchain;
 

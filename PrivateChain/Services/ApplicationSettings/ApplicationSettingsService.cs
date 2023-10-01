@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Olimpo;
 using PrivateChain.Model.ApplicationSettings;
 
 namespace PrivateChain.Services.ApplicationSettings
