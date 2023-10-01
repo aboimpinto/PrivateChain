@@ -7,6 +7,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Olimpo;
 using PrivateChain.Factories;
 using PrivateChain.Model;
 using PrivateChain.Services.ApplicationSettings;
@@ -36,8 +37,6 @@ public class Program
             })
             .ConfigureServices((hostContext, services) => 
             {
-                services.AddSingleton<IEventAggregator, EventAggregator>();
-
                 services.AddTransient<ISpecificTransactionDeserializer, BlockCreationTransactionDeserializer>();
 
                 services.AddSingleton<IBlockCreateEventFactory, BlockCreateEventFactory>();
@@ -46,6 +45,7 @@ public class Program
 
                 services.AddHostedService<PrivateChainWorker>();
             })
+            .RegisterEventAggregatorManager()
             .RegisterApplicationSettings()
             .RegisterServer()
             .RegisterBlockGenerator()

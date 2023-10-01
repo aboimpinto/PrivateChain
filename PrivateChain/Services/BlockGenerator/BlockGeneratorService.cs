@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Olimpo;
 using PrivateChain.EventMessages;
 using PrivateChain.Factories;
 using PrivateChain.Model.ApplicationSettings;

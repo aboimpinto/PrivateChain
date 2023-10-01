@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Signing.Manager\Signing.Manager.csproj" />
+    <ProjectReference Include="..\EventAggregator.Manager\EventAggregator.Manager.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Olimpo;
 using PrivateChain.Model;
 using PrivateChain.Model.ApplicationSettings;
 
@@ -41,7 +42,7 @@ namespace PrivateChain.Builders
             };
 
             var jsonRewardTransaction = JsonSerializer.Serialize(this._rewardTrasaction, jsonOptions);
-            var rewardTransactionSignature = Signing.Manager.SigningKeys.SignMessage(jsonRewardTransaction, stackerInfo.PrivateSigningAddress);
+            var rewardTransactionSignature = SigningKeys.SignMessage(jsonRewardTransaction, stackerInfo.PrivateSigningAddress);
 
             this._rewardTrasaction = new Transaction(
                 rawRewardTrasaction, 

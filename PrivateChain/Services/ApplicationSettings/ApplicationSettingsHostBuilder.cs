@@ -7,15 +7,15 @@ namespace PrivateChain.Services.ApplicationSettings
     public static class ApplicationSettingsHostBuilder
     {
         public static IHostBuilder RegisterApplicationSettings(this IHostBuilder builder)
-    {
-        builder.ConfigureServices((hostContext, services) => 
         {
-            services.AddSingleton<IStackerInfo, StackerInfo>();
-            services.AddSingleton<IServerInfo, ServerInfo>();
-            services.AddSingleton<IBootstrapper, ApplicationSettingsService>(); 
-        });
+            builder.ConfigureServices((hostContext, services) => 
+            {
+                services.AddSingleton<IStackerInfo, StackerInfo>();
+                services.AddSingleton<IServerInfo, ServerInfo>();
+                services.AddSingleton<IBootstrapper, ApplicationSettingsService>(); 
+            });
 
-        return builder;
-    }   
+            return builder;
+        }   
     }
 }
