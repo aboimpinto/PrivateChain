@@ -4,3 +4,6 @@
 [submodule "Signing.Manager"]
 	path = Signing.Manager
 	url = git@github.com:aboimpinto/Signing.Manager.git
+[submodule "EventAggregator.Manager"]
+	path = EventAggregator.Manager
+	url = git@github.com:aboimpinto/EventAggregator.Manager.git
