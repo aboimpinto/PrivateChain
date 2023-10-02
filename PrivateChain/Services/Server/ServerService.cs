@@ -49,7 +49,7 @@ namespace PrivateChain.Services.Server
 
         private void ManageClientConnection(object obj)
         {
-            
+            var client = (TcpClient)obj;
         }
     }
 }
