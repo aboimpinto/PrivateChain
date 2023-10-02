@@ -7,13 +7,13 @@ namespace PrivateChain
     public class PrivateChainWorker : BackgroundService
     {
         private readonly ILogger<PrivateChainWorker> _logger;
-        private readonly IEnumerable<IBootstrapper> _bootstrappers;
+        private readonly IBootstrapperManager _bootstrapperManager;
 
         public PrivateChainWorker(
-            IEnumerable<IBootstrapper> bootstrappers, 
+            IBootstrapperManager bootstrapperManager,
             ILogger<PrivateChainWorker> logger)
         {
-            this._bootstrappers = bootstrappers;
+            this._bootstrapperManager = bootstrapperManager;
             this._logger = logger;
 
         }
@@ -22,12 +22,14 @@ namespace PrivateChain
         {
             this._logger.LogInformation("PrivateChain service worker started...");
 
-            this._logger.LogInformation("Start bootstrappable modules...");
-            var bootstrappers = this._bootstrappers.OrderBy(x => x.Priority);
-            foreach(var module in bootstrappers)
-            {
-                module.Startup();
-            }
+            this._bootstrapperManager.StartBootstrappableModules();
+
+            // this._logger.LogInformation("Start bootstrappable modules...");
+            // var bootstrappers = this._bootstrappers.OrderBy(x => x.Priority);
+            // foreach(var module in bootstrappers)
+            // {
+            //     module.Startup();
+            // }
 
             return Task.CompletedTask;
         }
@@ -36,11 +38,11 @@ namespace PrivateChain
         {
             this._logger.LogInformation("Stopping modules...");
 
-            var bootstrappers = this._bootstrappers.OrderBy(x => x.Priority);
-            foreach(var module in bootstrappers)
-            {
-                module.Shutdown();
-            }
+            // var bootstrappers = this._bootstrappers.OrderBy(x => x.Priority);
+            // foreach(var module in bootstrappers)
+            // {
+            //     module.Shutdown();
+            // }
 
             this._logger.LogInformation("All modules successfully shutdown...");
             return base.StopAsync(cancellationToken);
