@@ -5,7 +5,8 @@
 	"appPort": ["4566:4566"],
 
 	"runArgs": [
-		"--network=privateChainNetwork"
+		"--network=privateChainNetwork",
+		"--name", "PrivateChain_Server"
 	],
 	
 	"customizations": {

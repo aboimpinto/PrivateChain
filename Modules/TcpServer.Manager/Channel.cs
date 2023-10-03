@@ -26,7 +26,7 @@ public class Channel : IDisposable
         this._client = client;
         this._isOpen = true;
 
-         if (!this._server.ConnectedChannels.OpenChannels.TryAdd(this._channelId, this));
+         if (!this._server.ConnectedChannels.OpenChannels.TryAdd(this._channelId, this))
          {
             this._isOpen = false;
             throw (new ChannelRegistrationException("Unable to register a new communication channel to channel list."));
