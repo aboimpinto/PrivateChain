@@ -2,22 +2,26 @@ using System.Net;
 using System.Net.Sockets;
 using Microsoft.Extensions.Logging;
 using PrivateChain.Model.ApplicationSettings;
+using TcpServer.Manager;
 
 namespace PrivateChain.Services.Server
 {
     public class ServerService : IServerService
     {
         private readonly IServerInfo _serverInfo;
+        private readonly IServer _server;
         private readonly ILogger<ServerService> _logger;
         private bool _isServerStarted;
-        private TcpListener _server;
+        // private TcpListener _server;d
         private CancellationTokenSource _serverCancelationTokenSouce;
 
         public ServerService(
             IServerInfo serverInfo,
+            IServer server,
             ILogger<ServerService> logger)
         {
             this._serverInfo = serverInfo;
+            this._server = server;
             this._logger = logger;
 
             this._serverCancelationTokenSouce = new CancellationTokenSource();
@@ -25,20 +29,22 @@ namespace PrivateChain.Services.Server
 
         public async Task Start()
         {
-            if (!this._isServerStarted)
-            {
-                this._isServerStarted = true;
+            await this._server.Start(IPAddress.Any, this._serverInfo.ListeningPort);
 
-                this._server = new TcpListener(IPAddress.Any, this._serverInfo.ListeningPort);
-                this._server.Start();
-                this._logger.LogInformation("Server listening...");
+            // if (!this._isServerStarted)
+            // {
+            //     this._isServerStarted = true;
 
-                while(!this._serverCancelationTokenSouce.IsCancellationRequested)
-                {
-                    var client = await this._server.AcceptTcpClientAsync();
-                    ThreadPool.QueueUserWorkItem(this.ManageClientConnection, client);
-                }
-            }
+            //     this._server = new TcpListener(IPAddress.Any, this._serverInfo.ListeningPort);
+            //     this._server.Start();
+            //     this._logger.LogInformation("Server listening...");
+
+            //     while(!this._serverCancelationTokenSouce.IsCancellationRequested)
+            //     {
+            //         var client = await this._server.AcceptTcpClientAsync();
+            //         ThreadPool.QueueUserWorkItem(this.ManageClientConnection, client);
+            //     }
+            // }
         }
 
         public void Stop()
@@ -49,7 +55,7 @@ namespace PrivateChain.Services.Server
 
         private void ManageClientConnection(object obj)
         {
-            var client = (TcpClient)obj;
+            var client = (TcpClient)obj;    
         }
     }
 }

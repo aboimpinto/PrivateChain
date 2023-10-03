@@ -16,6 +16,7 @@ using PrivateChain.Services.BlockGenerator;
 using PrivateChain.Services.Listener;
 using PrivateChain.Services.MemPool;
 using PrivateChain.Services.Server;
+using TcpServer.Manager;
 
 namespace PrivateChain;
 
@@ -48,6 +49,7 @@ public class Program
             .RegisterEventAggregatorManager()
             .RegisterBootstrapperManager()
             .RegisterApplicationSettings()
+            .RegisterTcpServer()
             .RegisterServer()
             .RegisterBlockGenerator()
             .RegisterBlockchain()

@@ -24,6 +24,7 @@
     <ProjectReference Include="..\Modules\Signing.Manager\Signing.Manager.csproj" />
     <ProjectReference Include="..\Modules\Encrypting.Manager\Encrypting.Manager.csproj" />
     <ProjectReference Include="..\Modules\Bootstrapper.Manager\Bootstrapper.Manager.csproj" />
+    <ProjectReference Include="..\Modules\TcpServer.Manager\TcpServer.Manager.csproj" />
   </ItemGroup>
 
 </Project>
