@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using System.Reactive.Subjects;
 
 namespace TcpServer.Manager;
 
@@ -11,9 +12,13 @@ public class Server : IServer
 
     public Channels ConnectedChannels { get; private set; }
 
+    public Subject<DataReceivedArgs> DataReceived { get; }
+
     public Server()
     {
         this.ConnectedChannels = new Channels(this);
+
+        this.DataReceived = new Subject<DataReceivedArgs>();
     }
 
     public async Task Start(string address, int port)
@@ -33,7 +38,6 @@ public class Server : IServer
             while(this.Running)
             {
                 var client = await this._listener.AcceptTcpClientAsync();
-                // await Task.Run(() => new Channel(this).Open(client))
                 ThreadPool.QueueUserWorkItem(this.CreateChannel, client);
             }
         }
@@ -49,6 +53,8 @@ public class Server : IServer
 
     public void Stop()
     {
+        this._listener.Stop();
+        this.Running = false;
     }
 
     private void CreateChannel(object obj)

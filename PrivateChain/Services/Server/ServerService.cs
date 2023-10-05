@@ -12,7 +12,7 @@ namespace PrivateChain.Services.Server
         private readonly IServer _server;
         private readonly ILogger<ServerService> _logger;
         private bool _isServerStarted;
-        // private TcpListener _server;d
+        
         private CancellationTokenSource _serverCancelationTokenSouce;
 
         public ServerService(
@@ -29,22 +29,12 @@ namespace PrivateChain.Services.Server
 
         public async Task Start()
         {
+            this._server.DataReceived.Subscribe(x => 
+            {
+                this._logger.LogInformation($"Message: {x.Message} from {x.ChannelId} received...");    
+            });
+
             await this._server.Start(IPAddress.Any, this._serverInfo.ListeningPort);
-
-            // if (!this._isServerStarted)
-            // {
-            //     this._isServerStarted = true;
-
-            //     this._server = new TcpListener(IPAddress.Any, this._serverInfo.ListeningPort);
-            //     this._server.Start();
-            //     this._logger.LogInformation("Server listening...");
-
-            //     while(!this._serverCancelationTokenSouce.IsCancellationRequested)
-            //     {
-            //         var client = await this._server.AcceptTcpClientAsync();
-            //         ThreadPool.QueueUserWorkItem(this.ManageClientConnection, client);
-            //     }
-            // }
         }
 
         public void Stop()

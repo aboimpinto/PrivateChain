@@ -1,5 +1,5 @@
 using System.Net.Sockets;
-using System.Threading.Channels;
+using System.Text;
 
 namespace TcpServer.Manager;
 
@@ -26,11 +26,39 @@ public class Channel : IDisposable
         this._client = client;
         this._isOpen = true;
 
-         if (!this._server.ConnectedChannels.OpenChannels.TryAdd(this._channelId, this))
-         {
+        if (!this._server.ConnectedChannels.OpenChannels.TryAdd(this._channelId, this))
+        {
             this._isOpen = false;
             throw (new ChannelRegistrationException("Unable to register a new communication channel to channel list."));
-         }
+        }
+
+        string data;
+        using(this._stream = this._client.GetStream())
+        {
+            var position = 0;
+
+            while(this._isOpen)
+            {
+                if (this._client.IsClientDisconnected())
+                {
+                    this.Close();
+                }
+                else
+                {
+                    while((position = this._stream.Read(this._buffer, 0, this._buffer.Length)) != 0 && this._isOpen)
+                    {
+                        data = Encoding.UTF8.GetString(this._buffer, 0, position);
+
+                        this._server.DataReceived.OnNext(new DataReceivedArgs(this._channelId, data, this));
+
+                        if (!this._isOpen)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     protected virtual void Dispose(bool disposing)
@@ -41,7 +69,8 @@ public class Channel : IDisposable
             {
                 // TODO: dispose managed state (managed objects)
             }
-            // stream.Close();
+            
+            this._stream.Close();
             this._client.Close();
             this._disposed = true;
         }
@@ -51,5 +80,12 @@ public class Channel : IDisposable
     {
         Dispose(disposing: true);
         GC.SuppressFinalize(this);
+    }
+
+    private void Close()
+    {
+        this.Dispose(false);
+        this._isOpen = false;   
+        this._server.ConnectedChannels.OpenChannels.TryRemove(this._channelId, out Channel removedChannel);
     }
 }
