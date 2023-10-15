@@ -1,10 +1,10 @@
+using System.Reactive.Linq;
 using Microsoft.Extensions.Logging;
 using Olimpo;
 using PrivateChain.EventMessages;
 using PrivateChain.Factories;
 using PrivateChain.Model.ApplicationSettings;
 using PrivateChain.Services.MemPool;
-using System.Reactive.Linq;
 
 namespace PrivateChain.Services.BlockGenerator;
 

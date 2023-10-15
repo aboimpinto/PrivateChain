@@ -1,5 +1,5 @@
 {
-	"name": "C# (.NET)",
+	"name": "C# (.NET): PrivateChainNode",
 	"image": "mcr.microsoft.com/devcontainers/dotnet:0-7.0",
 	
 	"appPort": ["4566:4566"],
@@ -8,7 +8,7 @@
 		"--network=privateChainNetwork",
 		"--name", "PrivateChain_Server"
 	],
-	
+
 	"customizations": {
 		"vscode": {
 			"extensions": [
