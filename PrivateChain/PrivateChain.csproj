@@ -25,6 +25,7 @@
     <ProjectReference Include="..\Modules\Encrypting.Manager\Encrypting.Manager.csproj" />
     <ProjectReference Include="..\Modules\Bootstrapper.Manager\Bootstrapper.Manager.csproj" />
     <ProjectReference Include="..\Modules\TcpServer.Manager\TcpServer.Manager.csproj" />
+    <ProjectReference Include="..\Modules\RPC.Model\RPC.Model.csproj" />
   </ItemGroup>
 
 </Project>
