@@ -10,3 +10,6 @@
 [submodule "Modules/Bootstrapper.Manager"]
 	path = Modules/Bootstrapper.Manager
 	url = git@github.com:aboimpinto/Bootstrapper.Manager.git
+[submodule "Modules/TcpServer.Manager"]
+	path = Modules/TcpServer.Manager
+	url = git@github.com:aboimpinto/TcpServer.Manager.git
