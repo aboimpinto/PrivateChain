@@ -13,3 +13,6 @@
 [submodule "Modules/TcpServer.Manager"]
 	path = Modules/TcpServer.Manager
 	url = git@github.com:aboimpinto/TcpServer.Manager.git
+[submodule "Modules/RPC.Model"]
+	path = Modules/RPC.Model
+	url = git@github.com:aboimpinto/RPC.Model.git
