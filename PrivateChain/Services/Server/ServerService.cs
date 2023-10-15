@@ -1,8 +1,9 @@
 using System.Net;
 using System.Net.Sockets;
 using Microsoft.Extensions.Logging;
+using Olimpo.TcpServer.Manager;
 using PrivateChain.Model.ApplicationSettings;
-using TcpServer.Manager;
+using Olimpo.TcpServer.Manager;
 
 namespace PrivateChain.Services.Server
 {

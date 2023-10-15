@@ -16,7 +16,7 @@ using PrivateChain.Services.BlockGenerator;
 using PrivateChain.Services.Listener;
 using PrivateChain.Services.MemPool;
 using PrivateChain.Services.Server;
-using TcpServer.Manager;
+using Olimpo.TcpServer.Manager;
 
 namespace PrivateChain;
 
