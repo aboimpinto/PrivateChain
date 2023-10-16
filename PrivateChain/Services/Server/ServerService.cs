@@ -49,6 +49,12 @@ namespace PrivateChain.Services.Server
                 };
 
                 var command = JsonSerializer.Deserialize<CommandBase>(x.Message, jsonOptions);
+
+                // TODO [AboimPinto]: Need to find a solution for injecting here strategies for what to do for each command.
+                if (command.Command == Commands.HandshakeCommand)
+                {
+                    this._eventAggregator.PublishAsync(new HandShakeMessageReceived((HandshakeCommand)command, x.ChannelId));
+                }
             });
 
             await this._server.Start(IPAddress.Any, this._serverInfo.ListeningPort);
